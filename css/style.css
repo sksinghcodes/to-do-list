@@ -180,8 +180,12 @@ body {
 	display: none;
 }
 
-@media only screen and (max-width: 628px){
-	.container{
-		margin: 15px;
-	}
+@media (max-width: 767px){
+	.container {
+        border-radius: 0;
+    }
+
+    .inputDiv {
+        margin: 15px;
+    }
 }
