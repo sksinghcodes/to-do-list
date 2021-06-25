@@ -189,4 +189,8 @@ body {
     .inputDiv {
         margin: 15px;
     }
+
+    .todoList {
+        margin: 0;
+    }
 }
