@@ -1,0 +1,187 @@
+@font-face{
+	font-family: "PT Sans";
+	src: url("../webfonts/PTSans-Regular.ttf");
+}
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none;
+	font-family: "PT Sans";
+}
+
+body {
+	background-color: #ececec;
+	width: 100%;
+}
+
+.container {
+	background-color: white;
+	min-height: 500px;
+	max-width: 600px;
+	border-radius: 47px;
+	box-shadow: 2px 7px 10px #ababab;
+	margin: 15px auto;
+	padding-bottom: 30px;
+	overflow: auto;
+}
+
+.inputDiv {
+	display: flex;
+	border-radius: 20px;
+	transition-duration: 0.2s;
+	margin: 30px;
+	transition-property: box-shadow;
+	box-shadow: 0 0 0 #d4d4d4;
+}
+
+.inputDiv:focus-within {
+	box-shadow: 0 0 7px #d4d4d4;
+}
+
+.input {
+	border: 1px solid #c1c1c1;
+	height: 40px;
+	width: 86%;
+	background-color: #f7f7f7;
+	border-radius: 20px 0 0 20px;
+	padding: 0 0 0 15px;
+	border-right: none;
+	letter-spacing: 0.8px;
+	color: #636363;
+	font-size: 17px;
+}
+
+.addBtn {
+	width: 14%;
+	min-width: 45px;
+	margin: 0;
+	border: none;
+	border-radius: 0 20px 20px 0;
+	background-color: #6d8aa2;
+	color: #ffffff;
+	font-size: 18px;
+}
+
+.addBtn:hover {
+    background: #486480;
+    transition-duration: .2s;
+}
+
+.addBtn:active {
+	background-color: #409fff;
+	transition-duration: 0.1s;
+}
+
+.fa-plus {
+	padding-top: 2px;
+	padding-right: 2px;
+}
+
+.todoList {
+	margin: 30px 0 0;
+	font-size: 18px;
+}
+
+
+
+.listItem{
+	display: flex;
+	align-items: center;
+	min-height: 40px;
+}
+
+.checkBoxDiv{
+	width: 40px;
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.label{
+	width: 100%;
+    padding: 10px 10px;
+    color: #333;
+    word-break: break-word;
+}
+
+.labelInput {
+    width: 100%;
+    padding: 5px 0 6px 10px;
+    color: #333;
+    border: none;
+    font-size: 18px;
+    min-height: 43px;
+    background-color: #e3f2fd;
+    color: #949494;
+}
+
+.done{
+	text-decoration: line-through;
+	opacity: 0.5;
+}
+
+.checkBoxDiv input{
+	width: 18px;
+	height: 18px;
+}
+
+.listItem:hover {
+    background-color: #f4f4f4;
+}
+
+.controls{
+	display: none;
+	align-self: stretch;
+}
+
+.listItem:hover > .checkBoxDiv{
+	background-color: #dedede;
+}
+
+.listItem:hover > .label{
+	width: calc(100% - 85px); 
+}
+
+.listItem:hover > .controls{
+	display: flex;
+}
+
+.listItem:hover > .labelInput {
+    width: calc(100% - 65px);
+    padding: 5px 0 6px 11px;
+}
+
+.controls button{
+	width: 40px;
+	border: none;
+	font-size: 18px;
+	color: white;
+	background-color: #6d8aa2;
+}
+
+.controls .saveBtn{
+	font-size: 21px;
+}
+
+.controls button:hover {
+    background: #486480;
+    transition-duration: 0.2s;
+}
+
+.controls button:active {
+	background-color: #409fff;
+	transition-duration: 0.1s;
+}
+
+.hidden{
+	display: none;
+}
+
+@media only screen and (max-width: 628px){
+	.container{
+		margin: 15px;
+	}
+}
