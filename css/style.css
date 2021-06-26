@@ -69,7 +69,8 @@ body {
     transition-duration: .2s;
 }
 
-.addBtn:active {
+.addBtn:active,
+.addBtn.active {
 	background-color: #409fff;
 	transition-duration: 0.1s;
 }
@@ -84,12 +85,11 @@ body {
 	font-size: 18px;
 }
 
-
-
 .listItem{
 	display: flex;
 	align-items: center;
 	min-height: 40px;
+    margin-bottom: 1px;
 }
 
 .checkBoxDiv{
@@ -171,7 +171,8 @@ body {
     transition-duration: 0.2s;
 }
 
-.controls button:active {
+.controls button:active,
+.controls button.active {
 	background-color: #409fff;
 	transition-duration: 0.1s;
 }
@@ -199,10 +200,31 @@ body {
     .todoList {
         margin: 0;
         max-height: calc(100% - 80px);
-        overflow: scroll;
+        overflow: auto;
     }
 
     .input {
         border-radius: none;
+    }
+
+    .listItem > .checkBoxDiv{
+        background-color: #dedede;
+    }
+    
+    .listItem > .label{
+        width: calc(100% - 85px); 
+    }
+    
+    .listItem > .controls{
+        display: flex;
+    }
+    
+    .listItem > .labelInput {
+        width: calc(100% - 65px);
+        padding: 5px 0 6px 11px;
+    }
+
+    .listItem {
+        background-color: #f4f4f4;
     }
 }
