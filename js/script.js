@@ -164,3 +164,10 @@ function saveLabel(event){
 function unfocused(event){
 	event.target.parentElement.children[3].children[1].click();
 }
+
+document.documentElement.style.setProperty('--vh', `${visualViewport.height}px`);
+document.documentElement.style.setProperty('--mh', `${visualViewport.height}px`);
+
+visualViewport.onresize = () => {
+    document.documentElement.style.setProperty('--vh', `${visualViewport.height}px`);
+}
