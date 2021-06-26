@@ -35,7 +35,7 @@ addBtn.onclick = function(){
 	retick();
 };
 
-document.onunload = function(){
+function saveToLocal(){
 	if (dataArray.length){
 		localStorage.setItem("dataString", JSON.stringify(dataArray));
 	}
