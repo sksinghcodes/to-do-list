@@ -38,7 +38,9 @@ addBtn.onclick = function(){
 function saveToLocal(){
 	if (dataArray.length){
 		localStorage.setItem("dataString", JSON.stringify(dataArray));
-	}
+	} else {
+        localStorage.clear();
+    }
 }
 
 document.onkeydown = function(event){
