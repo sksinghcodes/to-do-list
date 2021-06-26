@@ -93,7 +93,7 @@ body {
 }
 
 .checkBoxDiv{
-	width: 40px;
+	min-width: 40px;
 	align-self: stretch;
 	display: flex;
 	align-items: center;
@@ -198,5 +198,11 @@ body {
 
     .todoList {
         margin: 0;
+        max-height: calc(100% - 80px);
+        overflow: scroll;
+    }
+
+    .input {
+        border-radius: none;
     }
 }
