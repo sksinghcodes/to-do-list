@@ -191,6 +191,7 @@ body {
         flex-direction: column-reverse;
         padding: 0;
         box-shadow: none;
+        max-width: 100%;
     }
 
     .inputDiv {
@@ -199,8 +200,9 @@ body {
 
     .todoList {
         margin: 0;
-        max-height: calc(100% - 80px);
         overflow: auto;
+        max-height: calc(100% - 60px);
+        padding-bottom: 10px;
     }
 
     .input {
