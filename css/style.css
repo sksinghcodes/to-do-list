@@ -208,7 +208,7 @@ body {
     }
 
     .listItem > .checkBoxDiv{
-        background-color: #dedede;
+        background-color: none;
     }
     
     .listItem > .label{
@@ -225,6 +225,29 @@ body {
     }
 
     .listItem {
-        background-color: #f4f4f4;
+        background-color: none;
+    }
+
+    .controls button {
+        color: #6d8aa2;
+        background-color: #0000;
+    } 
+
+    .controls button:hover {
+        background: unset;
+    }
+
+    .controls button:active,
+    .controls button.active {
+        background-color: #409fff;
+        transition-duration: 0.1s;
+        color:#fff;
+    }
+
+    .inputDiv {
+        margin: 10px 0 0;
+        padding: 10px;
+        box-shadow: 0 0 10px #0005;
+        border-radius: 0;
     }
 }
