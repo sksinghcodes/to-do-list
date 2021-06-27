@@ -3,7 +3,6 @@ const input = document.querySelector(".input");
 const todoList = document.querySelector(".todoList");
 let dataArray = [];
 let taskBeingEditIndex;
-let saveBtnClicked = false;
 
 if(localStorage.length){
 	dataArray = JSON.parse(localStorage.getItem("dataString"));
@@ -84,18 +83,18 @@ function editTask(index){
 }
 
 function saveTask(){
-    triggerClass(todoList.children[taskBeingEditIndex].children[3].children[1], 'active');
+    let index = taskBeingEditIndex;
+    triggerClass(todoList.children[index].children[3].children[1], 'active');
     setTimeout(() => {
-        let editField = todoList.children[taskBeingEditIndex].children[2];
+        let editField = todoList.children[index].children[2];
         let filteredTask;
-        toggleClassHidden(taskBeingEditIndex);
+        toggleClassHidden(index);
         filteredTask = filterText(editField.value);
         if(filteredTask){
-            todoList.children[taskBeingEditIndex].children[1].innerText = filteredTask;
-            dataArray[taskBeingEditIndex].task = filteredTask;
+            todoList.children[index].children[1].innerText = filteredTask;
+            dataArray[index].task = filteredTask;
             saveChangesToLocal();
         }
-        taskBeingEditIndex = null;
     }, 100);
 }
 
@@ -168,10 +167,10 @@ function controlSystem(e){
 
     if(target.className === 'deleteBtn') {
         deleteTask(index);
-    } else if(target.className === 'editBtn') {
-        editTask(index);
     } else if(target.className === 'saveBtn') {
         saveTask(taskBeingEditIndex);
+    } else if(target.className === 'editBtn') {
+        editTask(index);
     }
 }
 
