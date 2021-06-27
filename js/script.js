@@ -84,6 +84,7 @@ function editTask(index){
 
 function saveTask(){
     let index = taskBeingEditIndex;
+    taskBeingEditIndex = null;
     triggerClass(todoList.children[index].children[3].children[1], 'active');
     setTimeout(() => {
         let editField = todoList.children[index].children[2];
