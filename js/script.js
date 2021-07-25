@@ -1,3 +1,4 @@
+document.body.onload = () => {
 const addBtn = document.querySelector(".addBtn");
 const input = document.querySelector(".input");
 const todoList = document.querySelector(".todoList");
@@ -196,4 +197,5 @@ document.documentElement.style.setProperty('--mh', `${visualViewport.height}px`)
 
 visualViewport.onresize = () => {
     document.documentElement.style.setProperty('--vh', `${visualViewport.height}px`);
+}
 }
