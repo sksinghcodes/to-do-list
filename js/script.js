@@ -192,8 +192,5 @@ function updateAttributes(fromIndex){
     }
 }
 
-document.documentElement.style.setProperty('--vh', `${visualViewport.height}px`);
-setTimeout(() => {
-    document.documentElement.style.setProperty('--vh', `${visualViewport.height}px`);
-}, 1000);
+document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
 }
