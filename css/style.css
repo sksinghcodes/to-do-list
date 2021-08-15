@@ -185,7 +185,6 @@ body {
 	.container {
         border-radius: 0;
         margin: 0;
-        min-height: var(--mh);
         height: var(--vh);
         display: flex;
         flex-direction: column-reverse;
