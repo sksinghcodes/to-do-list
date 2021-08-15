@@ -1,4 +1,3 @@
-document.body.onload = () => {
 const addBtn = document.querySelector(".addBtn");
 const input = document.querySelector(".input");
 const todoList = document.querySelector(".todoList");
