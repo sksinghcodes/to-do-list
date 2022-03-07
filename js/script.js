@@ -25,6 +25,8 @@
 				updateLocalStorage();
 				addItem(task);
 				inputDiv.children[0].value = '';
+				inputDiv.children[0].focus();
+				todoList.scroll(0, todoList.scrollHeight);
 			} else {
 				return false;
 			}
@@ -59,12 +61,13 @@
 		}
 	});
 
-	setSceenHeight();
 
-	onresize = setSceenHeight;
+	setScreenHeight()
 
-	function setSceenHeight() {
-		document.documentElement.style.setProperty('--screen-height', document.documentElement.clientHeight + 'px');
+	onresize = setScreenHeight;
+
+	function setScreenHeight() {
+		document.documentElement.style.setProperty('--screen-height', innerHeight + 'px');
 	}
 
 	function resize(listItem) {
