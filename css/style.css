@@ -1,255 +1,207 @@
-@font-face{
-	font-family: "PT Sans";
-	src: url("../webfonts/PTSans-Regular.ttf");
-}
-
 *{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	outline: none;
-	font-family: "PT Sans";
+	font-family: sans-serif;
+}
+
+li {
+	list-style: none;
 }
 
 body {
-	background-color: #ececec;
-	width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ececec;
 }
 
 .container {
-	background-color: white;
-	min-height: 500px;
-	max-width: 600px;
-	border-radius: 47px;
-	box-shadow: 2px 7px 10px #ababab;
-	margin: 15px auto;
-	padding-bottom: 30px;
-	overflow: auto;
+    background-color: white;
+    overflow: auto;
+}
+
+.inputDiv input {
+    width: 100%;
+    border: 1px solid #c1c1c1;
+    background-color: #f7f7f7;
+    border-radius: 20px 0 0 20px;
+    padding: 0 0 0 15px;
+    border-right: none;
+    letter-spacing: 0.8px;
+    color: #636363;
+    font-size: 17px;
 }
 
 .inputDiv {
-	display: flex;
-	border-radius: 20px;
-	transition-duration: 0.2s;
-	margin: 30px;
-	transition-property: box-shadow;
-	box-shadow: 0 0 0 #d4d4d4;
+    display: flex;
+    justify-content: space-between;
 }
 
 .inputDiv:focus-within {
-	box-shadow: 0 0 7px #d4d4d4;
+    box-shadow: 0 0 7px #d4d4d4;
 }
 
-.input {
-	border: 1px solid #c1c1c1;
-	height: 40px;
-	width: 86%;
-	background-color: #f7f7f7;
-	border-radius: 20px 0 0 20px;
-	padding: 0 0 0 15px;
-	border-right: none;
-	letter-spacing: 0.8px;
-	color: #636363;
-	font-size: 17px;
-}
-
-.addBtn {
-	width: 14%;
-	min-width: 45px;
-	margin: 0;
-	border: none;
-	border-radius: 0 20px 20px 0;
-	background-color: #6d8aa2;
-	color: #ffffff;
-	font-size: 18px;
-}
-
-.addBtn:hover {
-    background: #486480;
+.inputDiv button {
+    min-width: 55px;
+    cursor: pointer;
+    border: none;
+    border-radius: 0 20px 20px 0;
+    background-color: #6d8aa2;
+    color: #ffffff;
+    font-size: 18px;
+    padding-right: 3px;
     transition-duration: .2s;
 }
 
-.addBtn:active,
-.addBtn.active {
-	background-color: #409fff;
-	transition-duration: 0.1s;
+.inputDiv button:active, .inputDiv button.active {
+    background-color: #409fff;
 }
 
-.fa-plus {
-	padding-top: 2px;
-	padding-right: 2px;
+.list-item {
+    display: flex;
+    min-height: 40px;
+    align-items: stretch;
 }
 
-.todoList {
-	margin: 30px 0 0;
-	font-size: 18px;
-}
-
-.listItem{
-	display: flex;
-	align-items: center;
-	min-height: 40px;
-    margin-bottom: 1px;
-}
-
-.checkBoxDiv{
-	min-width: 40px;
-	align-self: stretch;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.label{
-	width: 100%;
-    padding: 10px 10px;
-    color: #333;
-    word-break: break-word;
-}
-
-.labelInput {
-    width: 100%;
-    padding: 5px 0 6px 10px;
-    color: #333;
+.task-completion {
+    min-width: 40px;
+    border-radius: 0;
     border: none;
+    font-size: 20px;
+    color: #0005;
+    transition-duration: 0.1s;
+    background: none;
+}
+
+.task-completion::after {
+    content: "\f0c8";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 500;
+}
+
+.list-item.completed .task-completion {
+    color: #278cff;
+}
+
+.list-item.completed .task-completion::after {
+    content: "\f14a";
+    font-weight: 600;
+}
+
+.controls button {
+    min-width: 40px;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    cursor: pointer;
     font-size: 18px;
-    min-height: 43px;
-    background-color: #e3f2fd;
-    color: #949494;
 }
 
-.done{
-	text-decoration: line-through;
-	opacity: 0.5;
+.controls button:active, .controls button.active {
+    background-color: #409fff;
+    transition-duration: 0.1s;
+    color: #fff;
 }
 
-.checkBoxDiv input{
-	width: 18px;
-	height: 18px;
-}
-
-.listItem:hover {
-    background-color: #f4f4f4;
-}
-
-.controls{
+.hidden {
 	display: none;
-	align-self: stretch;
 }
 
-.listItem:hover > .checkBoxDiv{
-	background-color: #dedede;
+.task {
+    width: 100%;
+    padding: 10px;
+    color: #0008;
+    word-break: break-word;
+    resize: none;
+    border-radius: 0;
+    border: none;
+    font-size: 16px;
+    background: #006cff21;
 }
 
-.listItem:hover > .label{
-	width: calc(100% - 85px); 
-}
-
-.listItem:hover > .controls{
-	display: flex;
-}
-
-.listItem:hover > .labelInput {
-    width: calc(100% - 65px);
-    padding: 5px 0 6px 11px;
-}
-
-.controls button{
-	width: 40px;
-	border: none;
-	font-size: 18px;
-	color: white;
-	background-color: #6d8aa2;
-}
-
-.controls .saveBtn{
-	font-size: 21px;
+.list-item .task[readonly] {
+    background-color: #0000;
+    color: #333;
 }
 
 .controls button:hover {
-    background: #486480;
     transition-duration: 0.2s;
 }
 
-.controls button:active,
-.controls button.active {
-	background-color: #409fff;
-	transition-duration: 0.1s;
+.list-item.completed .task {
+    text-decoration: line-through;
+    color: #999;
 }
 
-.hidden{
-	display: none;
-}
-
-@media (max-width: 767px){
+@media (min-width: 768px) {
 	.container {
-        border-radius: 0;
-        margin: 0;
-        height: var(--vh);
-        display: flex;
-        flex-direction: column-reverse;
-        padding: 0;
-        box-shadow: none;
-        max-width: 100%;
-    }
+		width: 768px;
+		box-shadow: 2px 7px 10px #ababab;
+		border-radius: 47px;
+		padding-bottom: 30px;
+	}
 
-    .inputDiv {
-        margin: 15px;
-    }
+	.inputDiv {
+	    margin: 30px;
+	    height: 40px;
+	    border-radius: 40px;
+	}
 
-    .todoList {
-        margin: 0;
-        overflow: auto;
-        max-height: calc(100% - 60px);
-        padding-bottom: 10px;
-    }
+	.controls {
+		display: none;
+	}
 
-    .input {
-        border-radius: none;
-    }
+	.list-item:hover .controls {
+	    display: flex;
+	}
 
-    .listItem > .checkBoxDiv{
-        background-color: none;
-    }
-    
-    .listItem > .label{
-        width: calc(100% - 85px); 
-    }
-    
-    .listItem > .controls{
-        display: flex;
-    }
-    
-    .listItem > .labelInput {
-        width: calc(100% - 65px);
-        padding: 5px 0 6px 11px;
-    }
+	.list-item:hover .task[readonly] {
+	    background-color: #f4f4f4;
+	}
 
-    .listItem {
-        background-color: #0000;
-    }
+	.list-item:hover .task-completion {
+	    background-color: #dedede;
+	}
 
-    .controls button {
-        color: #6d8aa2;
-        background-color: #0000;
-    } 
+	.controls button {
+	    color: white;
+	    background-color: #6d8aa2;
+	}
 
-    .controls button:hover {
-        background: unset;
-    }
-
-    .controls button:active,
-    .controls button.active {
-        background-color: #409fff;
-        transition-duration: 0.1s;
-        color:#fff;
-    }
-
-    .inputDiv {
-        margin: 0;
-        padding: 10px;
-        box-shadow: 0 0 10px #0005;
-        border-radius: 0;
-        position: relative;
-    }
+	.inputDiv button:hover {
+	    background: #486480;
+	}
 }
+
+@media (max-width: 767px) {
+	.container {
+	    width: 100%;
+	    height: var(--screen-height);
+	    display: flex;
+	    flex-direction: column-reverse;
+	}
+
+	.todoList {
+	    max-height: calc(100% - 60px);
+	    overflow: auto;
+	}
+
+	.inputDiv {
+	    padding: 10px;
+	    box-shadow: 0 0 10px #0005;
+	    height: 60px;
+	    position: relative;
+	}
+
+	.controls {
+		display: flex;
+	}
+
+	.controls button {
+	    color: #6d8aa2;
+	    background-color: white;
+	}
+} 
