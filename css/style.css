@@ -79,7 +79,7 @@ body {
 .task-completion::after {
     content: "\f0c8";
     font-family: 'Font Awesome 5 Free';
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .list-item.completed .task-completion {
@@ -88,7 +88,7 @@ body {
 
 .list-item.completed .task-completion::after {
     content: "\f14a";
-    font-weight: 600;
+    font-weight: 900;
 }
 
 .controls button {
