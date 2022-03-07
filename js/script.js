@@ -1,194 +1,160 @@
-const addBtn = document.querySelector(".addBtn");
-const input = document.querySelector(".input");
-const todoList = document.querySelector(".todoList");
-let dataArray = [];
-let taskBeingEditIndex;
+(function(){
+	const root = document.getElementById('root');
+	const inputDiv = root.children[0];
+	const todoList = root.children[1];
+	const dataArray = JSON.parse(localStorage.getItem('dataString')) || [];
+	let taskBeingEditIndex = null;
+	let taskBeingEditText = null;
 
-if(localStorage.length){
-	dataArray = JSON.parse(localStorage.getItem("dataString"));
-    renderTasks(dataArray)
-}
-
-addBtn.onclick = function(){addNewTask(input.value);}
-
-input.onkeypress = function(e){
-    if(e.key === "Enter") {
-        addBtn.click();
-        triggerClass(addBtn, 'active');
-    }
-}
-
-todoList.onclick = function(e){controlSystem(e);}
-
-function unfocused(){
-    saveTask();
-}
-
-function renderTasks(dataArray) {
-    for(var i = 0; i < dataArray.length; i++ ){
-		renderSingleTask(dataArray[i].task, i + 1);
+	for (let i = 0; i < dataArray.length; i++) {
+		addItem(dataArray[i].task, dataArray[i].isCompleted);
 	}
-}
 
-function renderSingleTask(task, index){
-	todoList.innerHTML +=
-	`<div class="listItem">
-		<div class="checkBoxDiv">
-			<input type="checkbox" class="checkbox" onchange="toggleTaskCompletion(event)" id="item${index}" >
-		</div>
-		<label for="item${index}" class="label">${task}</label>			
-		<input type="text" class="labelInput hidden" onfocusout="unfocused(event)" value="${task}">
-		<div class="controls">
-			<button class="editBtn"><span class="fa fa-pen"></span></button>
-			<button class="saveBtn hidden"><span class="fa fa-save"></span></button>
-			<button class="deleteBtn"><span class="fa fa-trash"></span></button>
-		</div>
-	</div>`;
+	document.addEventListener('click', e => {
+		if(e.target.dataset.action !== 'edit' && e.target.dataset.action !== 'toggleCompletion') {
+			saveEdit();
+		}
+	});
 
-    setTimeout(() => {
-        renderTaskCompletion(index - 1)
-    }, 10);
-}
+	inputDiv.addEventListener('click', e => {
+		if(e.target.classList.contains('addBtn')){
+			let task = inputDiv.children[0].value.trim();
 
-function addNewTask(task){
-    var filteredTask = filterText(task);
+			if(task) {
+				dataArray.push({task, isCompleted: false});
+				updateLocalStorage();
+				addItem(task);
+				inputDiv.children[0].value = '';
+			} else {
+				return false;
+			}
+		}
+	});
 
-    if(filteredTask){
-        dataArray.push({
-            task: filteredTask,
-            isCompleted: false,
-        })
+	inputDiv.children[0].addEventListener('keypress', e => {
+		if(e.key === 'Enter') {
+			e.target.nextElementSibling.click();
+		}
+	});
 
-        renderSingleTask(filteredTask, dataArray.length);
+	todoList.addEventListener('click', e => {
+		if(e.target.dataset.action === 'delete') {
+			removeItem(e.target.closest('li'));
+		}
 
-        saveChangesToLocal();
-        input.value = "";
-        input.focus();
-    }
-}
+		if(e.target.dataset.action === 'edit') {
+			startEdit(e.target.closest('li'));
+		}
 
-function deleteTask(index){
-    todoList.children[index].remove();
-    dataArray.splice(index, 1);
-    saveChangesToLocal();
-    updateAttributes(index);
-}
+		if(e.target.dataset.action === 'toggleCompletion') {
+			if(e.target.readOnly || e.target.tagName === 'BUTTON') {
+				toggleTaskCompletion(e.target.closest('li'));
+			}
+		}
+	});
 
-function editTask(index){
-    let editField = todoList.children[index].children[2];
-    toggleClassHidden(index);
-    taskBeingEditIndex = index;
-    editField.focus();
-    editField.selectionStart = editField.value.length;
-}
+	todoList.addEventListener('input', e => {
+		if(e.target.tagName === 'TEXTAREA') {
+			resize(e.target.parentElement)
+		}
+	});
 
-function saveTask(){
-    let index = taskBeingEditIndex;
-    taskBeingEditIndex = null;
-    triggerClass(todoList.children[index].children[3].children[1], 'active');
-    setTimeout(() => {
-        let editField = todoList.children[index].children[2];
-        let filteredTask;
-        toggleClassHidden(index);
-        filteredTask = filterText(editField.value);
-        if(filteredTask){
-            todoList.children[index].children[1].innerText = filteredTask;
-            dataArray[index].task = filteredTask;
-            saveChangesToLocal();
-        }
-    }, 100);
-}
+	setSceenHeight();
 
-function toggleClassHidden(index){
-    let elementArray = [
-        todoList.children[index].children[1],
-        todoList.children[index].children[2],
-        todoList.children[index].children[3].children[0],
-        todoList.children[index].children[3].children[1]
-    ];
+	onresize = setSceenHeight;
 
-    for (let i = 0; i < elementArray.length; i++) {
-        if(elementArray[i].classList.contains('hidden')) {
-            elementArray[i].classList.remove('hidden');
-        } else {
-            elementArray[i].classList.add('hidden');
-        }
-    }
-}
+	function setSceenHeight() {
+		document.documentElement.style.setProperty('--screen-height', document.documentElement.clientHeight + 'px');
+	}
 
-function toggleTaskCompletion(e){
-    let index = isOnIndex(e.path[2]);
-    dataArray[index].isCompleted = !dataArray[index].isCompleted;
-    renderTaskCompletion(index);
-    saveChangesToLocal();
-}
+	function resize(listItem) {
+		const taskTextarea = listItem.children[1];
+		taskTextarea.style.height = 'auto';
+	    taskTextarea.style.height = `${taskTextarea.scrollHeight}px`;
+	}
 
-function renderTaskCompletion(index){
-    if(dataArray[index].isCompleted) {
-        todoList.children[index].children[1].classList.add('done');
-        todoList.children[index].children[0].children[0].checked = true;
-    } else {
-        todoList.children[index].children[1].classList.remove('done');
-        todoList.children[index].children[0].children[0].checked = false;
-    }
-}
+	function addItem(task, isCompleted = false){
+		const li = document.createElement('li');
+		li.className = "list-item";
+		isCompleted ? li.classList.add('completed') : '';
+		li.onmouseleave = li.onmouseenter = e => resize(e.target);
+		li.innerHTML = `<button class="task-completion" data-action="toggleCompletion"></button>
+			<textarea rows=1 class="task" data-action="toggleCompletion" readonly>${task}</textarea>
+			<div class="controls">
+				<button class="fas fa-pen" data-action="edit"></button>
+				<button class="fas fa-save hidden" data-action="save"></button>
+				<button class="fas fa-trash" data-action="delete"></button>
+			</div>`;
 
-function filterText(text) {
-    return text.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
-}
+		todoList.append(li);
+		resize(li);
+	}
 
-function saveChangesToLocal(){
-	if (dataArray.length){
-		localStorage.setItem("dataString", JSON.stringify(dataArray));
-	} else {
-        localStorage.clear();
-    }
-}
+	function startEdit(listItem) {
+		saveEdit();
 
-function triggerClass(element, className, duration = 100) {
-    element.classList.add(className);
-    setTimeout(() => {
-        element.classList.remove(className);
-    }, duration);
-}
+		taskBeingEditIndex = isNthChild(listItem);
+		const taskTextarea = listItem.children[1]
+		taskBeingEditText = taskTextarea.value;
 
-function controlSystem(e){
-    let target;
-    let index;
+		listItem.children[2].children[0].classList.toggle('hidden');
+		listItem.children[2].children[1].classList.toggle('hidden');
 
-    if(e.path[1].className === 'controls'){
-        target = e.path[0];
-    } else if (e.path[2].className === 'controls'){
-        target = e.path[1];
-    } else {
-        return false;
-    }
-    
-    index = isOnIndex(target.parentElement.parentElement);
+		taskTextarea.readOnly = false;
+		taskTextarea.focus();
+		taskTextarea.selectionStart = taskTextarea.selectionEnd = taskTextarea.value.length;
+	}
 
-    if(target.className === 'deleteBtn') {
-        deleteTask(index);
-    } else if(target.className === 'saveBtn') {
-        saveTask(taskBeingEditIndex);
-    } else if(target.className === 'editBtn') {
-        editTask(index);
-    }
-}
+	function saveEdit(){
+		if(typeof taskBeingEditIndex === 'number') {
+			const listItem = todoList.children[taskBeingEditIndex];
+			const taskTextarea = listItem.children[1];
+			const task = taskTextarea.value.trim();
 
-function isOnIndex(element){
-    for(let i = 0; i < element.parentElement.childElementCount; i++){
-        if (element === element.parentElement.children[i]) {
-            return i;
-        }
-    }
-}
+			listItem.children[2].children[0].classList.toggle('hidden');
+			listItem.children[2].children[1].classList.toggle('hidden');
 
-function updateAttributes(fromIndex){
-    for(let i = fromIndex; i < dataArray.length; i++){
-        renderTaskCompletion(i);
-        todoList.children[i].children[0].children[0].id = `item${i+1}`;
-        todoList.children[i].children[1].attributes.for.value =`item${i+1}`;
-    }
-}
+			if(task) {
+				taskTextarea.value = task;
+				dataArray[taskBeingEditIndex].task = task;
+				updateLocalStorage();
+			} else {
+				taskTextarea.value = taskBeingEditText;
+			}
 
-document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+			taskTextarea.readOnly = true;
+			taskBeingEditIndex = null;
+			taskBeingEditText = null
+		}
+	}
+
+	function removeItem(listItem){
+		saveEdit();
+
+		const index = isNthChild(listItem);
+		dataArray.splice(index, 1);
+		updateLocalStorage();
+		listItem.remove();
+	}
+
+	function toggleTaskCompletion(listItem){
+		saveEdit();
+		
+		const index = isNthChild(listItem);
+		dataArray[index].isCompleted = !dataArray[index].isCompleted;
+		updateLocalStorage();
+		listItem.classList.toggle('completed');
+	}
+
+	function updateLocalStorage(){
+		localStorage.setItem('dataString', JSON.stringify(dataArray));
+	}
+
+	function isNthChild(element) {
+		for(let i = 0; i < element.parentElement.children.length; i++) {
+			if(element === element.parentElement.children[i]){
+				return i;
+			}
+		}
+	}
+})();
