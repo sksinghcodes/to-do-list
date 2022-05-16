@@ -1,10 +1,10 @@
-# React to do list app ( class based components and life cycle methods )
+# React to do list app ( HTML, CSS and JS )
 
 I am making just to do list apps using different techniques.
 
-This one is made using React class based components and the lifecycle methods.  Check it out and let me know if there is something that I could have done better.
+This one is made using just html, css and js. Check it out and let me know if there is something that I could have done better.
 
-[https://sksinghcodes.github.io/react-to-do-list-app/](https://sksinghcodes.github.io/react-to-do-list-app/)
+[https://sksinghcodes.github.io/to-do-list/](https://sksinghcodes.github.io/to-do-list/)
 
 Thank you
 
