@@ -1,4 +1,4 @@
-# React to do list app ( HTML, CSS and JS )
+# Javascript to do list app ( HTML, CSS and JS )
 
 I am making just to do list apps using different techniques.
 
